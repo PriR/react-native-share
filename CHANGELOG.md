@@ -1,3 +1,9 @@
+### 1.2.0-4 (2019-02-11)
+
+##### Build System / Dependencies
+
+*  fix all deprecation and lint in ShareFile(s) ([#374](https://github.com/react-native-community/react-native-share/pull/374)) ([67fb59e9](https://github.com/react-native-community/react-native-share/commit/67fb59e9dc7ec9f98ad76f6809dbc98d240c451e))
+
 #### 1.1.3-3 (2018-10-23)
 
 ##### Build System / Dependencies
