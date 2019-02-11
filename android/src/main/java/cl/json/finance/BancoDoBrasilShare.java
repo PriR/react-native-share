@@ -1,4 +1,4 @@
-package cl.json.social;
+package cl.json.finance;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
