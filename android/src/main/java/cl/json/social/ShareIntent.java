@@ -30,11 +30,21 @@ public abstract class ShareIntent {
     protected String chooserTitle = "Share";
     protected ShareFile fileShare;
     protected ReadableMap options;
+    protected ReadableMap apps;
+
+
+
     public ShareIntent(ReactApplicationContext reactContext) {
         this.reactContext = reactContext;
         this.setIntent(new Intent(android.content.Intent.ACTION_SEND));
         this.getIntent().setType("text/plain");
     }
+
+    // public ShareIntent(ReactApplicationContext reactContext) {
+    //     this.reactContext = reactContext;
+    //     this.setIntent(new Intent(android.content.Intent.ACTION_SEND));
+    //     this.getIntent().setType("text/plain");
+    // }
     public void open(ReadableMap options) throws ActivityNotFoundException {
         this.options = options;
 
@@ -163,7 +173,13 @@ public abstract class ShareIntent {
     public static boolean hasValidKey(String key, ReadableMap options) {
         return options != null && options.hasKey(key) && !options.isNull(key);
     }
-    protected abstract String getPackage();
-    protected abstract String getDefaultWebLink();
-    protected abstract String getPlayStoreLink();
+    protected String getPackage(String packageName) {
+        return packageName;
+    }
+    protected String getDefaultWebLink(String defaultWebLink) {
+        return defaultWebLink;
+    }
+    protected String getPlayStoreLink(String playStoreLink) {
+        return playStoreLink;
+    }
 }

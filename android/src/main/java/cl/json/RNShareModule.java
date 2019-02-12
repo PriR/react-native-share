@@ -15,68 +15,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import cl.json.social.EmailShare;
-import cl.json.social.FacebookShare;
-import cl.json.social.FacebookPagesManagerShare;
 import cl.json.social.GenericShare;
-import cl.json.social.GooglePlusShare;
 import cl.json.social.ShareIntent;
-import cl.json.social.TwitterShare;
-import cl.json.social.WhatsAppShare;
-import cl.json.social.InstagramShare;
-import cl.json.social.PinterestShare;
-import cl.json.social.SnapChatShare;
-import cl.json.social.SMSShare;
-import cl.json.social.MessengerShare;
+
 
 public class RNShareModule extends ReactContextBaseJavaModule {
 
     private final ReactApplicationContext reactContext;
     private enum SHARES {
-        facebook,
-        generic,
-        pagesmanager,
-        twitter,
-        whatsapp,
-        instagram,
-        googleplus,
-        email,
-        pinterest,
-        messenger,
-        snapchat,
-        sms;
-
-
-        public static ShareIntent getShareClass(String social, ReactApplicationContext reactContext) {
-            SHARES share = valueOf(social);
-            switch (share) {
-                case generic:
-                    return new GenericShare(reactContext);
-                case facebook:
-                    return new FacebookShare(reactContext);
-                case pagesmanager:
-                    return new FacebookPagesManagerShare(reactContext);
-                case twitter:
-                    return new TwitterShare(reactContext);
-                case whatsapp:
-                    return new WhatsAppShare(reactContext);
-                case instagram:
-                    return new InstagramShare(reactContext);
-                case googleplus:
-                    return new GooglePlusShare(reactContext);
-                case email:
-                    return new EmailShare(reactContext);
-                case pinterest:
-                    return new PinterestShare(reactContext);
-                case sms:
-                    return new SMSShare(reactContext);
-                case snapchat:
-                    return new SnapChatShare(reactContext);
-                case messenger:
-                    return new  MessengerShare(reactContext);
-                default:
-                    return null;
-            }
+        generic;
+        public static ShareIntent getShareClass(ReactApplicationContext reactContext) {
+            return new GenericShare(reactContext);
         }
     };
 
@@ -103,6 +52,18 @@ public class RNShareModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void open(ReadableMap options, @Nullable Callback failureCallback, @Nullable Callback successCallback) {
         try{
+
+            JSONArray options = new JSONArray();
+            JSONObject item = new JSONObject();
+            item.put("package", "com.google.android.apps.plus");
+            item.put("defaultWebLink", "https://plus.google.com/share?url={url}");
+            item.put("playStoreLink", "market://details?id=com.google.android.apps.plus");
+            options.add(item);
+            item.put("br.com.bb.android", "com.google.android.apps.plus");
+            item.put("defaultWebLink", "");
+            item.put("playStoreLink", "market://details?id=br.com.bb.android");
+            options.add(item);
+
             GenericShare share = new GenericShare(this.reactContext);
             share.open(options);
             successCallback.invoke("OK");
@@ -120,9 +81,9 @@ public class RNShareModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void shareSingle(ReadableMap options, @Nullable Callback failureCallback, @Nullable Callback successCallback) {
         System.out.println("SHARE SINGLE METHOD");
-        if (ShareIntent.hasValidKey("social", options) ) {
+        // if (ShareIntent.hasValidKey("social", options) ) {
             try{
-                ShareIntent shareClass = SHARES.getShareClass(options.getString("social"), this.reactContext);
+                ShareIntent shareClass = SHARES.getShareClass(this.reactContext);
                 if (shareClass != null && shareClass instanceof ShareIntent) {
                     shareClass.open(options);
                     successCallback.invoke("OK");
@@ -138,9 +99,9 @@ public class RNShareModule extends ReactContextBaseJavaModule {
                 System.out.println(e.getMessage());
                 failureCallback.invoke(e.getMessage());
             }
-        } else {
-            failureCallback.invoke("key 'social' missing in options");
-        }
+        // } else {
+        //     failureCallback.invoke("key 'social' missing in options");
+        // }
     }
 
     @ReactMethod

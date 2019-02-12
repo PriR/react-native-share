@@ -21,17 +21,17 @@ public class GenericShare extends ShareIntent {
     }
 
     @Override
-    protected String getPackage() {
-        return null;
+    protected String getPackage(String packageName) {
+        return packageName;
     }
 
     @Override
-    protected String getDefaultWebLink() {
-        return null;
+    protected String getDefaultWebLink(String defaultWebLink) {
+        return defaultWebLink;
     }
 
     @Override
-    protected String getPlayStoreLink() {
-        return null;
+    protected String getPlayStoreLink(String playStoreLink) {
+        return playStoreLink;
     }
 }
